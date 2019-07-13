@@ -96,7 +96,7 @@ def makeImage(numPics = 20, pixelsPerUnit = 150):
 
 
 if __name__ == '__main__':
-    amount = 1
+    amount = 50
     pixelsPerUnit = 150
     seed = random.randrange(sys.maxsize)
     if len(sys.argv) > 1:
@@ -105,6 +105,6 @@ if __name__ == '__main__':
         pixelsPerUnit = int(sys.argv[2])
     if len(sys.argv) > 3:
         seed = int(sys.argv[3])
-    print("seed: %i ppu: %i" % (seed,pixelsPerUnit))
+    print("amount: %i ppu: %i seed: %i" % (amount,pixelsPerUnit,seed))
     random.seed(seed)
     makeImage(amount, pixelsPerUnit)
