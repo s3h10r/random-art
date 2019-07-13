@@ -1,26 +1,28 @@
-import random, math
+#!/usr/bin/env python3
+import math
+import random
+import sys
 from PIL import Image
 
-random.seed()
 
 class X:
    def eval(self, x, y):
       return x
-   
+
    def __str__(self):
       return "x"
 
 class Y:
    def eval(self, x, y):
       return y
-   
+
    def __str__(self):
       return "y"
 
 class SinPi:
    def __init__(self, prob):
       self.arg = buildExpr(prob * prob)
-   
+
    def __str__(self):
       return "sin(pi*" + str(self.arg) + ")"
 
@@ -61,7 +63,7 @@ def plotIntensity(exp, pixelsPerUnit = 150):
     for py in range(canvasWidth):
         for px in range(canvasWidth):
             # Convert pixel location to [-1,1] coordinates
-            x = float(px - pixelsPerUnit) / pixelsPerUnit 
+            x = float(px - pixelsPerUnit) / pixelsPerUnit
             y = -float(py - pixelsPerUnit) / pixelsPerUnit
             z = exp.eval(x,y)
 
@@ -77,7 +79,7 @@ def plotColor(redExp, greenExp, blueExp, pixelsPerUnit = 150):
     bluePlane  = plotIntensity(blueExp, pixelsPerUnit)
     return Image.merge("RGB", (redPlane, greenPlane, bluePlane))
 
-def makeImage(numPics = 20):
+def makeImage(numPics = 20, pixelsPerUnit = 150):
    with open("eqns.txt", 'w') as eqnsFile:
       for i in range(numPics):
          redExp = buildExpr()
@@ -89,7 +91,20 @@ def makeImage(numPics = 20):
          eqnsFile.write("green = " + str(greenExp) + "\n")
          eqnsFile.write("blue = " + str(blueExp) + "\n\n")
 
-         image = plotColor(redExp, greenExp, blueExp)
+         image = plotColor(redExp, greenExp, blueExp, pixelsPerUnit)
          image.save("img" + str(i) + ".png", "PNG")
 
-#makeImage(50)
+
+if __name__ == '__main__':
+    amount = 1
+    pixelsPerUnit = 150
+    seed = random.randrange(sys.maxsize)
+    if len(sys.argv) > 1:
+        amount = int(sys.argv[1])
+    if len(sys.argv) > 2:
+        pixelsPerUnit = int(sys.argv[2])
+    if len(sys.argv) > 3:
+        seed = int(sys.argv[3])
+    print("seed: %i ppu: %i" % (seed,pixelsPerUnit))
+    random.seed(seed)
+    makeImage(amount, pixelsPerUnit)
