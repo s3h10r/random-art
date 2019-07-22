@@ -4,7 +4,6 @@ import random
 import sys
 from PIL import Image
 
-
 class X:
    def eval(self, x, y):
       return x
@@ -94,13 +93,12 @@ def makeImage(numPics = 20, pixelsPerUnit = 150):
          image = plotColor(redExp, greenExp, blueExp, pixelsPerUnit)
          image.save("img" + str(i) + ".png", "PNG")
 
-def generate_image(pixels_per_unit = 150, rand_seed = None):
+def generate_image(pixels_per_unit = 150, seed = None):
     """
     allows calling from external code (e.g. polaroidme)
 
     return PilImage, meta (string)
     """
-    seed = rand_seed
     if not seed:
         seed = random.randrange(sys.maxsize)
     random.seed(seed)
