@@ -52,4 +52,4 @@ if __name__ == '__main__':
 # === END polaroidme plugin-interface
 
 # --- .. here comes the plugin-specific part to get some work done...
-from ..randomart import generate_image as _generate_image
+from .randomart import generate_image as _generate_image
