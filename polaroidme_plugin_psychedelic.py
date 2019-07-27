@@ -1,1 +1,0 @@
-egw_plugin_psychedelic.py
