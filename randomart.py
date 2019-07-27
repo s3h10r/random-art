@@ -95,7 +95,7 @@ def makeImage(numPics = 20, pixelsPerUnit = 150):
 
 def generate_image(pixels_per_unit = 150, seed = None):
     """
-    allows calling from external code (e.g. polaroidme)
+    allows calling from external code (e.g. einguteswerkzeug)
 
     return PilImage, meta (string)
     """

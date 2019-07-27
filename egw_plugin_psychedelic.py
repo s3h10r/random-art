@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 #coding=utf-8
 
-# === polaroidme plugin-interface ===
-# --- all polaroidme-plugins (generators, filters) must implement this
+# === einguteswerkzeug plugin-interface ===
+# --- all einguteswerkzeug-plugins (generators, filters) must implement this
 import logging
 import string
 
@@ -23,7 +23,7 @@ def run(**kwargs):
     else:
         return _generate_image(**kwargs)
 
-# --- END all polaroidme-plugins (generators, filters) must implement this
+# --- END all einguteswerkzeug-plugins (generators, filters) must implement this
 
 def get_plugin_doc(format='text'):
     """
@@ -49,7 +49,7 @@ def get_plugin_doc(format='text'):
 if __name__ == '__main__':
     print(get_plugin_doc())
 
-# === END polaroidme plugin-interface
+# === END einguteswerkzeug plugin-interface
 
 # --- .. here comes the plugin-specific part to get some work done...
 from .randomart import generate_image as _generate_image
