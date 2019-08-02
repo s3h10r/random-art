@@ -1,55 +1,44 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #coding=utf-8
-
-# === einguteswerkzeug plugin-interface ===
-# --- all einguteswerkzeug-plugins (generators, filters) must implement this
 import logging
+import random
 import string
+import sys
+from PIL import Image, ImageDraw
+from einguteswerkzeug.plugins import EGWPluginGenerator
 
-name = "psychedelic"
-description = "Random (Psychedelic) Art"
-kwargs = {'pixels_per_unit' : 150, 'seed' : None}
-args=None
-author = "Jeremy Kun http://jeremykun.com/2012/01/01/random-psychedelic-art/"
-version = '0.4.0'
+# --- configure logging
+log = logging.getLogger(__name__)
+log.setLevel(logging.INFO)
+handler = logging.StreamHandler() # console-handler
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+log.addHandler(handler)
+# ---
 
-def run(**kwargs):
-    """
-    this is the wrapper around the functionality of the plugin.
-    """
-    if not kwargs:
-        # use default values
-        return _generate_image()
-    else:
-        return _generate_image(**kwargs)
+meta = {
+    "name" : "psychedelic",
+    "version" : "0.4.1",
+    "description" : "Random (Psychedelic) Art",
+    "author" : "Jeremy Kun http://jeremykun.com/2012/01/01/random-psychedelic-art/"
+}
 
-# --- END all einguteswerkzeug-plugins (generators, filters) must implement this
+class Psychedelic(EGWPluginGenerator):
+    def __init__(self, **kwargs):
+        super().__init__(**meta)
+        # defining mandatory kwargs (addionals to the mandatory of the base-class)
+        add_plugin_kwargs = { 'pixels_per_unit' : 150,
+                              'seed' : random.randrange(sys.maxsize) }
+        self._define_mandatory_kwargs(self, **add_plugin_kwargs)
+        self.kwargs = kwargs
 
-def get_plugin_doc(format='text'):
-    """
-    """
-    if format not in ('txt', 'text', 'plaintext'):
-        raise Exception("Sorry. format %s not available. Valid options are ['text']" % format)
-    tpl_doc = string.Template("""
-    filters.$name - $description
-    kwargs  : $kwargs
-    args    : $args
-    author  : $author
-    version : __version__
-    """)
-    return tpl_doc.substitute({
-        'name' : name,
-        'description' : description,
-        'kwargs' : kwargs,
-        'args'    : args,
-        'author'  : author,
-        'version' : __version__,
-        })
+    def _generate_image(self):
+        return _create_psychedelic(**self.kwargs)
 
-if __name__ == '__main__':
-    print(get_plugin_doc())
 
-# === END einguteswerkzeug plugin-interface
+generator = Psychedelic()
+assert isinstance(generator,EGWPluginGenerator)
 
 # --- .. here comes the plugin-specific part to get some work done...
-from .randomart import generate_image as _generate_image
+
+from .randomart import generate_image as _create_psychedelic

@@ -93,12 +93,14 @@ def makeImage(numPics = 20, pixelsPerUnit = 150):
          image = plotColor(redExp, greenExp, blueExp, pixelsPerUnit)
          image.save("img" + str(i) + ".png", "PNG")
 
-def generate_image(pixels_per_unit = 150, seed = None):
+def generate_image(**kwargs):
     """
     allows calling from external code (e.g. einguteswerkzeug)
 
     return PilImage, meta (string)
     """
+    pixels_per_unit = kwargs['pixels_per_unit']
+    seed = kwargs['seed']
     if not seed:
         seed = random.randrange(sys.maxsize)
     random.seed(seed)
@@ -107,7 +109,7 @@ def generate_image(pixels_per_unit = 150, seed = None):
     blueExp = buildExpr()
     image = plotColor(redExp, greenExp, blueExp, pixels_per_unit)
     meta = 'red={} green={} blue={} seed={}'.format(redExp,greenExp,blueExp,seed)
-    return image, meta
+    return image
 
 if __name__ == '__main__':
     amount = 50
